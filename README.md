@@ -1,3 +1,5 @@
+
+
 # 📌 Job Application Tracker API
 
 A Spring Boot RESTful API for managing the complete lifecycle of job applications. The project focuses on domain validation, finite-state-machine constraints, automated database auditing, server-side pagination, structured global error handling, and automated unit testing.
@@ -79,98 +81,43 @@ Repository
    ↓
 Database
 
-The Controller handles HTTP concerns, the Service owns business rules, and the Repository handles persistence. This separation reduces coupling and allows business logic to be tested independently of HTTP and database infrastructure.
+---
 
-Why DTOs Instead of Exposing JPA Entities?
-The API uses DTOs at the application boundary instead of directly exposing persistence entities.
-This keeps the external API contract separate from the database model, allowing the persistence structure and API representation to evolve independently.
-
-Why Validate Job Status Transitions?
-A job application has a defined lifecycle rather than allowing arbitrary status changes.
-APPLIED
-   ↓
-INTERVIEW_SCHEDULED
-   ├──→ OFFERED
-   └──→ REJECTED
-
-Terminal states cannot be changed back to earlier states.
-These transition rules are enforced in the Service layer because they represent business rules rather than HTTP or persistence concerns.
-Why Server-Side Pagination?
-Returning every application in a single response does not scale with dataset size.
-Using Pageable allows the application to request only the required page of records from the database. This keeps response sizes bounded and avoids loading the entire dataset into application memory.
-
-Why Centralized Exception Handling?
-Exception handling is centralized using @RestControllerAdvice instead of repeating error-handling logic across individual controllers.
-This provides a consistent error response structure and keeps controller methods focused on request handling.
-Why Automated Database Auditing?
-createdAt and updatedAt represent persistence metadata rather than client-provided business data.
-They are therefore maintained automatically instead of requiring API clients to provide or modify these values.
-Why Unit Test the Service Layer?
-The Service layer contains important business rules such as job-status transition validation.
-Mockito is used to isolate the Service from the Repository, allowing these rules to be tested without requiring a running database.
-
-🔄 Request & Persistence Flow
-A typical request follows this path:
-HTTP Request
-     ↓
-Controller
-     ↓
-Service
-     ↓
-Repository
-     ↓
-Spring Data JPA
-     ↓
-Hibernate
-     ↓
-JDBC
-     ↓
-MySQL
-Each layer has a distinct responsibility:
-Controller: Handles the HTTP/API boundary.
-Service: Applies application and business rules.
-Repository: Provides the persistence abstraction.
-Spring Data JPA: Provides repository infrastructure and query abstraction.
-Hibernate: Implements the JPA persistence and ORM behavior.
-JDBC: Provides the Java database connectivity layer.
-MySQL: Persists the relational data.
 🛠️ Tech Stack
+
 Language: Java 17+
+
 Framework: Spring Boot 3
+
 Persistence: Spring Data JPA, Hibernate, MySQL
+
 Testing: JUnit 5, Mockito
+
 API Documentation: SpringDoc OpenAPI 3 (Swagger UI)
+
 Build Tool: Maven
 
+
+
+---
+
 🔌 API Endpoints Reference
-HTTP Method
-Endpoint
-Description
-Request Body / Params
-POST
-/api/jobs
-Create a new application
-JobApplicationRequestDTO
-GET
-/api/jobs
-Get paginated application records
-page, size, sortBy
-GET
-/api/jobs/{id}
-Get application details by ID
-Path variable id
-PUT
-/api/jobs/{id}
-Update application details & state
-JobApplicationRequestDTO
-DELETE
-/api/jobs/{id}
-Remove an application by ID
-Path variable id
-GET
-/api/jobs/stats
-Retrieve aggregate metrics by status
-None
+
+HTTP Method	Endpoint	Description	Request Body / Params
+
+POST	/api/jobs	Create a new application	JobApplicationRequestDTO
+GET	/api/jobs	Get paginated application records	page, size, sortBy
+GET	/api/jobs/{id}	Get application details by ID	Path variable id
+PUT	/api/jobs/{id}	Update application details & state	JobApplicationRequestDTO
+DELETE	/api/jobs/{id}	Remove an application by ID	Path variable id
+GET	/api/jobs/stats	Retrieve aggregate metrics by status	None
+
+
+
+---
+
 🧪 Running Unit Tests
+
 Execute the automated unit test suite locally:
+
 ./mvnw test
