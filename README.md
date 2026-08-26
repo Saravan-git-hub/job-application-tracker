@@ -1,85 +1,67 @@
-
-
-# 📌 Job Application Tracker API
+📌 Job Application Tracker API
 
 A Spring Boot RESTful API for managing the complete lifecycle of job applications. The project focuses on domain validation, finite-state-machine constraints, automated database auditing, server-side pagination, structured global error handling, and automated unit testing.
 
+
 ---
 
-## 📸 Screenshots & API Walkthrough
+📸 Screenshots & API Walkthrough
 
-### 1. Interactive OpenAPI / Swagger Documentation
+1. Interactive OpenAPI / Swagger Documentation
 
 Overview of all REST endpoints exposed by the service.
 
-![Swagger API Overview](docs/images/01-swagger-overview.png)
 
-### 2. Create Job Application (`POST /api/jobs`)
+2. Create Job Application (POST /api/jobs)
 
-Successful creation of a job application returning a `201 Created` status with auto-generated timestamps.
+Successful creation of a job application returning a 201 Created status with auto-generated timestamps.
 
-![Create Application](docs/images/02-create-job.png)
 
-### 3. Fetch All Applications (`GET /api/jobs`)
+3. Fetch All Applications (GET /api/jobs)
 
-Retrieving persisted application records from the database.
+Retrieving persisted application records across the database.
 
-![Get Applications](docs/images/03-get-all-jobs.png)
 
-### 4. Update Job Application & State Machine (`PUT /api/jobs/{id}`)
+4. Update Job Application & State Machine (PUT /api/jobs/{id})
 
-Updating application details and transitioning state while preserving the original `createdAt` timestamp.
+Updating application details and transitioning state while preserving the original createdAt timestamp.
 
-![Update Application](docs/images/04-update-job.png)
 
-### 5. Server-Side Pagination & Dynamic Filtering
+5. Server-Side Pagination & Dynamic Filtering
 
-Efficiently retrieving data in bounded pages using Spring Data JPA `Pageable` (`page`, `size`, `sortBy`) and custom filters.
+Efficient database querying using Spring Data JPA Pageable (page, size, sortBy) and custom filters.
 
-![Pagination and Search](docs/images/05-pagination-filter.png)
 
-### 6. Centralized Error Handling & Validation
+6. Centralized Error Handling & Validation
 
-Predictable, structured JSON error response when querying a non-existent resource (`404 Not Found`).
+Predictable, structured JSON error response when querying a non-existent resource (404 Not Found).
 
-![Error Handling](docs/images/06-error-handling.png)
 
-### 7. Aggregate Statistics (`GET /api/jobs/stats`)
+7. Aggregate Statistics (GET /api/jobs/stats)
 
 Real-time breakdown and aggregate counts of applications grouped by their current lifecycle status.
 
-![Job Statistics](docs/images/07-job-stats.png)
+
 
 ---
 
-## 🚀 Key Features & Architectural Highlights
+🚀 Key Features & Architectural Highlights
 
-* **Clean Layered Architecture:** Separates HTTP handling, business logic, persistence, and API data models across Controller, Service, Repository, and DTO layers.
-* **Finite-State Machine Constraints:** Enforces valid lifecycle transitions (`APPLIED` → `INTERVIEW_SCHEDULED` → `OFFERED` / `REJECTED`) and blocks illegal modifications on terminal states.
-* **Automated Database Auditing:** Automatically tracks `createdAt` and `updatedAt` metadata through JPA/Hibernate auditing support.
-* **Server-Side Pagination:** Uses Spring Data JPA `Pageable` to retrieve data in bounded pages instead of loading the complete result set into application memory.
-* **Centralized Exception Handling:** Uses `@RestControllerAdvice` to map domain-specific and validation exceptions to consistent error responses.
-* **Service-Layer Unit Testing:** Tests business logic using JUnit 5 and Mockito while isolating the Service layer from the database through repository mocking.
-* **Interactive API Documentation:** Provides an OpenAPI 3.0 contract rendered through Swagger UI.
+Clean Layered Architecture: Strict separation of concerns across Controller, Service, Repository, and DTO layers.
 
----
+Finite-State Machine Constraints: Enforces valid lifecycle transitions (APPLIED → INTERVIEW_SCHEDULED → OFFERED / REJECTED) and blocks illegal modifications on terminal states.
 
-## 🧠 Engineering Decisions
+Automated Database Auditing: Automatic tracking of createdAt and updatedAt metadata via Hibernate annotations.
 
-### Why Layered Architecture?
+Optimized SQL Execution: Server-side pagination (LIMIT / OFFSET) to prevent memory bottlenecks on large datasets.
 
-The application separates HTTP handling, business rules, and persistence responsibilities.
+Centralized Exception Handling: Global @RestControllerAdvice mapping domain-specific and validation exceptions to uniform error schemas.
 
-```text
-Client
-   ↓
-Controller
-   ↓
-Service
-   ↓
-Repository
-   ↓
-Database
+Automated AAA Unit Testing: Service layer completely verified using JUnit 5 and Mockito with isolated repository mocking.
+
+Interactive Documentation: Live OpenAPI 3.0 contract rendered dynamically via Swagger UI.
+
+
 
 ---
 
