@@ -80,9 +80,11 @@ Repository
 Database
 
 The Controller handles HTTP concerns, the Service owns business rules, and the Repository handles persistence. This separation reduces coupling and allows business logic to be tested independently of HTTP and database infrastructure.
+
 Why DTOs Instead of Exposing JPA Entities?
 The API uses DTOs at the application boundary instead of directly exposing persistence entities.
 This keeps the external API contract separate from the database model, allowing the persistence structure and API representation to evolve independently.
+
 Why Validate Job Status Transitions?
 A job application has a defined lifecycle rather than allowing arbitrary status changes.
 APPLIED
@@ -96,6 +98,7 @@ These transition rules are enforced in the Service layer because they represent 
 Why Server-Side Pagination?
 Returning every application in a single response does not scale with dataset size.
 Using Pageable allows the application to request only the required page of records from the database. This keeps response sizes bounded and avoids loading the entire dataset into application memory.
+
 Why Centralized Exception Handling?
 Exception handling is centralized using @RestControllerAdvice instead of repeating error-handling logic across individual controllers.
 This provides a consistent error response structure and keeps controller methods focused on request handling.
