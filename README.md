@@ -1,6 +1,6 @@
 📌 Job Application Tracker API
 
-A Spring Boot RESTful API for managing the complete lifecycle of job applications. The project focuses on domain validation, finite-state-machine constraints, automated database auditing, server-side pagination, structured global error handling, and automated unit testing.
+A production-grade RESTful API built with Spring Boot 3 and Spring Data JPA to manage the complete lifecycle of job applications. Engineered with domain validation, finite-state machine constraints, automated database auditing, server-side pagination, structured global error handling, and comprehensive unit test coverage.
 
 
 ---
